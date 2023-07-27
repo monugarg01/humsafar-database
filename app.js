@@ -34,7 +34,7 @@ pool.getConnection((err, connection) => {
         res.send("hello world!!!")
     }) 
     app.get('/test', (req, res) => {
-        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
         res.header('Access-Control-Allow-Headers', 'Content-Type, api_key, authorization, Authorization, x-requested-with, Total-Count, Total-Pages, Error-Message');
         res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, OPTIONS');
         res.header('Access-Control-Max-Age', 1800);
