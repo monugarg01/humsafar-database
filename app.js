@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const query = 'SELECT * FROM `prediction_table`.`test`;'
 
 
+
 const pool = mysql.createPool({
     connectionLimit: 10,
     host: 'database-2.cpralmrljzsc.ap-south-1.rds.amazonaws.com',
@@ -21,6 +22,13 @@ const pool = mysql.createPool({
 
 pool.getConnection((err, connection) => {
     if (err) throw err;
+    
+    app.use((req,res,next)=>{
+        res.setHeader('Access-Control-Allow-Origin','*');
+        res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
+        res.setHeader('Access-Control-Allow-Methods','Content-Type','Authorization');
+        next(); 
+    })
 
     app.all('/*', (request, response, next) => {
         response.header('Access-Control-Allow-Origin', '*');
