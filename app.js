@@ -1,20 +1,18 @@
 const express = require('express');
-//const cors = require('cors');
+const cors = require('cors');
 const mysql = require('mysql');
 const app = express();
 var bodyParser = require('body-parser')
 
-// var corsOptions = {
-//     origin: function (origin, callback) {
-//       if (whitelist.indexOf(origin) !== -1) {
-//         callback(null, true)
-//       } else {
-//         callback(new Error('Not allowed by CORS'))
-//       }
-//     }
-//   }
+const cors=require("cors");
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
 
-//app.use(cors(corsOptions));
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const query = 'SELECT * FROM `prediction_table`.`test`;'
