@@ -15,9 +15,6 @@ var corsOptions = {
   }
 
 app.use(cors(corsOptions));
-app.listen(8080, function () {
-    console.log('Enable cors in all requests..');
-   })
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const query = 'SELECT * FROM `prediction_table`.`test`;'
