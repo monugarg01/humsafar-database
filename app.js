@@ -5,6 +5,9 @@ const app = express();
 var bodyParser = require('body-parser')
 
 app.use(cors());
+app.listen(8080, function () {
+    console.log('Enable cors in all requests..');
+   })
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const query = 'SELECT * FROM `prediction_table`.`test`;'
@@ -22,21 +25,6 @@ const pool = mysql.createPool({
 
 pool.getConnection((err, connection) => {
     if (err) throw err;
-    
-    app.use((req,res,next)=>{
-        res.setHeader('Access-Control-Allow-Origin','*');
-        res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
-        res.setHeader('Access-Control-Allow-Methods','Content-Type','Authorization');
-        next(); 
-    })
-
-    app.all('/*', (request, response, next) => {
-        response.header('Access-Control-Allow-Origin', '*');
-        response.header('Access-Control-Allow-Headers', 'Content-Type, api_key, authorization, Authorization, x-requested-with, Total-Count, Total-Pages, Error-Message');
-        response.header('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, OPTIONS');
-        response.header('Access-Control-Max-Age', 1800);
-       next();
-    });
 
     app.get('/test', (req, res) => {
         res.header('Access-Control-Allow-Origin', '*');
@@ -71,11 +59,6 @@ pool.getConnection((err, connection) => {
                 return res.json(results)
             };
         });
-        // connection.query("INSERT INTO `names` (name) VALUES (?)", username.toString(), function(err, result){
-        //     if(err) throw err;
-        //         console.log("1 record inserted");
-        //     });
-        // res.send(username);
         
     });
 });
