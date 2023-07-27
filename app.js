@@ -29,23 +29,15 @@ const pool = mysql.createPool({
 
 pool.getConnection((err, connection) => {
     if (err) throw err;
-
+    console.log('You are now connected...');
     app.get("/", (req, res)=>{
         res.send("hello world!!!")
     }) 
-    app.get('/test', (req, res) => {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Content-Type', 'application/json');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, api_key, authorization, Authorization, x-requested-with, Total-Count, Total-Pages, Error-Message');
-        res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, OPTIONS');
-        res.header('Access-Control-Max-Age', 1800);
-        connection.query(query, (err, results) => {
-            if (err) {
-                return res.send(err)
-            }
-            else {
-                return res.json(results)
-            };
+    app.get('/test', function (req, res) {
+        console.log(req);
+        connection.query(query, function (error, results, fields) {
+            if (error) throw error;
+            res.end(JSON.stringify(results));
         });
     });
     app.post('/test1', (req, res)=>{
@@ -71,7 +63,8 @@ pool.getConnection((err, connection) => {
     });
 });
 
-const PORT = 4000;
-app.listen(PORT, () => {
-    console.log('MySchema SQL server listening on PORT ', PORT);
-});
+var server = app.listen(3000, "127.0.0.1", function () {
+    var host = server.address().address
+    var port = server.address().port
+    console.log("Example app listening at http://%s:%s", host, port)
+  });
