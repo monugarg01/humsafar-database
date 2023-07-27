@@ -31,6 +31,10 @@ pool.getConnection((err, connection) => {
     });
 
     app.get('/test', (req, res) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, api_key, authorization, Authorization, x-requested-with, Total-Count, Total-Pages, Error-Message');
+        res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, OPTIONS');
+        res.header('Access-Control-Max-Age', 1800);
         connection.query(query, (err, results) => {
             if (err) {
                 return res.send(err)
@@ -41,6 +45,10 @@ pool.getConnection((err, connection) => {
         });
     });
     app.post('/test1', (req, res)=>{
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, api_key, authorization, Authorization, x-requested-with, Total-Count, Total-Pages, Error-Message');
+        res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, OPTIONS');
+        res.header('Access-Control-Max-Age', 1800);
         let alldata = req.body.allData;
         let values = Object.values(alldata)
         console.log("----->",Object.values(alldata))
@@ -64,7 +72,7 @@ pool.getConnection((err, connection) => {
     });
 });
 
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 app.listen(PORT, () => {
     console.log('MySchema SQL server listening on PORT ', PORT);
 });
