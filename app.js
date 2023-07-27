@@ -70,7 +70,7 @@ pool.getConnection((err, connection) => {
     });
 });
 
-const PORT = 80;
+const PORT = 8080;
 app.listen(PORT, () => {
     console.log('MySchema SQL server listening on PORT ', PORT);
 });
