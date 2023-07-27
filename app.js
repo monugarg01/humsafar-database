@@ -33,6 +33,9 @@ const pool = mysql.createPool({
 pool.getConnection((err, connection) => {
     if (err) throw err;
 
+    app.get("/", (req, res)=>{
+        res.send("hello world!!!")
+    }) 
     app.get('/test', (req, res) => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Headers', 'Content-Type, api_key, authorization, Authorization, x-requested-with, Total-Count, Total-Pages, Error-Message');
