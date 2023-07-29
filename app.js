@@ -20,7 +20,6 @@ const query = 'SELECT * FROM `prediction_table`.`test`;'
 
 const pool = mysql.createPool({
     connectionLimit: 10,
-    localAddress     : '15.206.32.105',
     host: 'database-2.cpralmrljzsc.ap-south-1.rds.amazonaws.com',
     user: 'admin',
     password: 'adminadmin',
@@ -34,21 +33,19 @@ pool.getConnection((err, connection) => {
     app.get("/", (req, res)=>{
         res.send("hello world!!!")
     }) 
-    app.get('/test', function (req, res) {
-        console.log(req);
+    app.get('/getmactchs', function (req, res) {
         connection.query(query, function (error, results, fields) {
             if (error) throw error;
             res.end(JSON.stringify(results));
         });
     });
-    app.post('/test1', (req, res)=>{
+    app.post('/uploadmatchdata', (req, res)=>{
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Headers', 'Content-Type, api_key, authorization, Authorization, x-requested-with, Total-Count, Total-Pages, Error-Message');
         res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, OPTIONS');
         res.header('Access-Control-Max-Age', 1800);
         let alldata = req.body.allData;
         let values = Object.values(alldata)
-        console.log("----->",Object.values(alldata))
         const query1 = "INSERT INTO prediction_table.test(prediction_description,prediction_image_link,match_name,league,date,time,Stadium,match_report,telegram_link,Instagram_link,facebook_link,Wicket_Keeper1,Batsman1,all_rounder_1,Baller1,Wicket_Keeper2,Batsman2,all_rounder_2,Baller2,Team_1_playing,Team_2_playing,prediction_id) VALUES (?)";
         connection.query(query1,[values],(err, results) => {
             if (err) {
