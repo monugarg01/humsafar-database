@@ -20,6 +20,7 @@ const query = 'SELECT * FROM `prediction_table`.`test`;'
 
 const pool = mysql.createPool({
     connectionLimit: 10,
+    localAddress     : '15.206.32.105',
     host: 'database-2.cpralmrljzsc.ap-south-1.rds.amazonaws.com',
     user: 'admin',
     password: 'adminadmin',
