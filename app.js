@@ -13,7 +13,7 @@ const corsOptions ={
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const query = 'SELECT * FROM `prediction_table`.`test`;'
+const query = 'SELECT * FROM `prediction_table`.`matches`;'
 
 
 
@@ -42,7 +42,7 @@ pool.getConnection((err, connection) => {
         let alldata = req.body.allData;
         let values = Object.values(alldata)
         console.log("----->",Object.values(alldata))
-        const query1 = "INSERT INTO prediction_table.test(prediction_description,prediction_image_link,match_name,league,date,time,Stadium,match_report,telegram_link,Instagram_link,facebook_link,Batsman1,Batsman2,prediction_id) VALUES (?)";
+        const query1 = "INSERT INTO prediction_table.matches(prediction_description,prediction_image_link,match_name,league,date,time,Stadium,match_report,telegram_link,Instagram_link,facebook_link,Batsman1,Batsman2,prediction_id) VALUES (?)";
         connection.query(query1,[values],(err, results) => {
             if (err) {
                 console.log(err)
