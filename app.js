@@ -10,7 +10,6 @@ const corsOptions ={
    optionSuccessStatus:200,
 }
 
-
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,24 +28,21 @@ const pool = mysql.createPool({
 
 pool.getConnection((err, connection) => {
     if (err) throw err;
-    console.log('You are now connected...');
-    app.get("/", (req, res)=>{
-        res.send("hello world!!!")
-    }) 
-    app.get('/getmactchs', function (req, res) {
-        connection.query(query, function (error, results, fields) {
-            if (error) throw error;
-            res.end(JSON.stringify(results));
+    app.get('/getmactchs', (req, res) => {
+        connection.query(query, (err, results) => {
+            if (err) {
+                return res.send(err)
+            }
+            else {
+                return res.json(results)
+            };
         });
     });
     app.post('/uploadmatchdata', (req, res)=>{
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, api_key, authorization, Authorization, x-requested-with, Total-Count, Total-Pages, Error-Message');
-        res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, OPTIONS');
-        res.header('Access-Control-Max-Age', 1800);
         let alldata = req.body.allData;
         let values = Object.values(alldata)
-        const query1 = "INSERT INTO prediction_table.test(prediction_description,prediction_image_link,match_name,league,date,time,Stadium,match_report,telegram_link,Instagram_link,facebook_link,Wicket_Keeper1,Batsman1,all_rounder_1,Baller1,Wicket_Keeper2,Batsman2,all_rounder_2,Baller2,Team_1_playing,Team_2_playing,prediction_id) VALUES (?)";
+        console.log("----->",Object.values(alldata))
+        const query1 = "INSERT INTO prediction_table.test(prediction_description,prediction_image_link,match_name,league,date,time,Stadium,match_report,telegram_link,Instagram_link,facebook_link,Batsman1,Batsman2,prediction_id) VALUES (?)";
         connection.query(query1,[values],(err, results) => {
             if (err) {
                 console.log(err)
@@ -57,10 +53,8 @@ pool.getConnection((err, connection) => {
                 return res.json(results)
             };
         });
-        
     });
 });
-
 
 app.listen(4000, () => {
     console.log('MySchema SQL server listening on PORT 4000');
