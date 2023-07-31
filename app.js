@@ -41,7 +41,6 @@ pool.getConnection((err, connection) => {
     app.post('/uploadmatchdata', (req, res)=>{
         let alldata = req.body.allData;
         let values = Object.values(alldata)
-        console.log("----->",Object.values(alldata))
         const query1 = "INSERT INTO prediction_table.matches(prediction_description,prediction_image_link,match_name,league,date,time,Stadium,match_report,telegram_link,Instagram_link,facebook_link,Batsman1,Batsman2,prediction_id) VALUES (?)";
         connection.query(query1,[values],(err, results) => {
             if (err) {
@@ -49,7 +48,6 @@ pool.getConnection((err, connection) => {
                 return res.send(err)
             }
             else {
-                console.log(results)
                 return res.json(results)
             };
         });
