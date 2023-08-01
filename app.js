@@ -19,7 +19,7 @@ const query = 'SELECT * FROM `prediction_table`.`matches`;'
 
 const pool = mysql.createPool({
     connectionLimit: 10,
-    host: 'database-2.cpralmrljzsc.ap-south-1.rds.amazonaws.com',
+    host: 'database-1.cpralmrljzsc.ap-south-1.rds.amazonaws.com',
     user: 'admin',
     password: 'adminadmin',
     database: 'prediction_table',
